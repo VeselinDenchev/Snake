@@ -1,0 +1,59 @@
+body {
+    background-image: url(../img/background-image.png);
+    background-color: black;
+}
+
+@font-face {
+    font-family: "Snake Chan";
+    src: local("Snake Chan"),
+            url(../font/SnakeChan.ttf);
+}
+
+#title {
+    display: block;
+    text-transform: uppercase;
+    color: rgb(81, 133, 61);
+    text-shadow: 5px 5px 5px black;
+    font-size: 50pt;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 5px;
+    font-family: 'Snake Chan';
+    margin-top: 1.5%;
+    margin-bottom: 2%;
+}
+
+#game-board {
+    background-color: rgba(204, 204, 204, 0.8);
+    width: 65vmin;
+    height: 65vmin;
+    margin: 3% auto 0 auto;
+    display: grid;
+}
+
+.snake-body {
+    background-color: rgb(81, 133, 61);
+}
+
+#snake-head {
+    background-image: url(../img/snake-head.jpg);
+    background-size : cover;
+}
+
+.regular-food {
+    background-image: url(../img/apple.gif);
+    background-size : contain;
+    background-repeat: no-repeat;
+}
+
+.special-food {
+    background-image: url(../img/rat-food.gif);
+    background-size : contain;
+    background-repeat: no-repeat;
+}
+
+#score, #best-score {
+    color: white;
+    font-family: 'Snake Chan';
+    margin-left: 45%;
+}
