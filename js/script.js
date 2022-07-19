@@ -1,52 +1,52 @@
 //  Game constants
-const SNAKE_SPEED = 2;
-const GAME_BOARD = document.getElementById('game-board');
-const EXPANSION_RATE = 1;
-const GRID_SIZE = 15;
-const SPECIAL_FOOD_EXPIRATION_MS = 10_000;
+const snakeSpeed = 2;
+const gameBoard = document.getElementById('game-board');
+const expansionRate = 1;
+const gridSize = 15;
+const specialFoodExpirationMs = 10_000;
 
 // Directions
-const DIRECTION_UP_NAME = 'up';
-const DIRECTION_DOWN_NAME = 'down';
-const DIRECTION_LEFT_NAME = 'left';
-const DIRECTION_RIGHT_NAME = 'right';
-const DIRECTION_UP = {x: 0, y: -1};
-const DIRECTION_DOWN = {x: 0, y: 1};
-const DIRECTION_LEFT = {x: -1, y: 0};
-const DIRECTION_RIGHT = {x: 1, y: 0};
+const directionUpName = 'up';
+const directionDownName = 'down';
+const directionLeftName = 'left';
+const directionRightName = 'right';
+const directionUp = {x: 0, y: -1};
+const directionDown = {x: 0, y: 1};
+const directionLeft = {x: -1, y: 0};
+const directionRight = {x: 1, y: 0};
 
 //  Score labels
-const SCORE_LABEL = "Score: ";
-const BEST_SCORE_LABEL = "Best score: ";
+const scoreLabel = "Score: ";
+const bestScoreLabel = "Best score: ";
 
 //  Messages
-const GAME_OVER_MESSAGE = "You lost. Press OK to restart.";
+const gameOverMessage = "You lost. Press OK to restart.";
 
 //  Food points
-const REGULAR_FOOD_POINTS = 1;
-const SPECIAL_FOOD_POINTS = 28;
+const regularFoodPoints = 1;
+const specialFoodPoints = 28;
 
 //  Possibility percentages
-const MAX_PERCENT_POSSIBILITY = 100;
-const SPECIAL_FOOD_PERCENT_POSSIBILITY = 3;
+const maxPercentPossibility = 100;
+const specialFoodPercentPossibility = 3;
 
 //  Arrows
-const ARROW_UP = "ArrowUp";
-const ARROW_DOWN = "ArrowDown";
-const ARROW_LEFT = "ArrowLeft";
-const ARROW_RIGHT = "ArrowRight";
+const arrowUp = "ArrowUp";
+const arrowDown = "ArrowDown";
+const arrowLeft = "ArrowLeft";
+const arrowRight = "ArrowRight";
 
 //  Classes
-const REGULAR_FOOD_CLASS = 'regular-food';
-const SPECIAL_FOOD_CLASS = 'special-food';
-const SNAKE_BODY_CLASS = "snake-body";
+const regularFoodClass = 'regular-food';
+const specialFoodClass = 'special-food';
+const snakeBodyClass = "snake-body";
 
 //  IDs
-const SNAKE_HEAD_ID = "snake-head";
-const SCORE_ID = "score";
-const BEST_SCORE_ID = "best-score";
+const snakeHeadId = "snake-head";
+const scoreId = "score";
+const bestScoreId = "best-score";
 
-const SECONDS_IN_MILLISECOND = 1_000;
+const secondsInMillisecond = 1_000;
 
 let snakeBody = [getRandomGridPosition()];
 
@@ -55,7 +55,7 @@ let inputDirection = {x: 0, y: 0};
 let lastInputDirection = {x: 0, y: 0};
 
 let regularFood = getRandomFoodPosition();
-let foodElement;
+let regularFoodElement;
 
 let specialFood = {x: 0, y: 0, isSpawned: false};
 let specialFoodElement;
@@ -65,8 +65,8 @@ let newSegmentsCount;
 
 let gameOver = false;
 
-GAME_BOARD.style.gridTemplateRows = 'repeat(' + GRID_SIZE + ', 1fr)';
-GAME_BOARD.style.gridTemplateColumns = 'repeat(' + GRID_SIZE + ', 1fr)';
+gameBoard.style.gridTemplateRows = 'repeat(' + gridSize + ', 1fr)';
+gameBoard.style.gridTemplateColumns = 'repeat(' + gridSize + ', 1fr)';
 
 let score = 0;
 let bestScore = null;
@@ -76,43 +76,43 @@ window.requestAnimationFrame(play);
 
 window.addEventListener('keydown', e => {
     switch (e.key) {
-        case ARROW_UP:
+        case arrowUp:
             if(lastInputDirection.y !== 0)
             {
                 break;
             }
-            inputDirection = DIRECTION_UP;
+            inputDirection = directionUp;
             break;
 
-        case ARROW_DOWN:
+        case arrowDown:
             if(lastInputDirection.y !== 0)
             {
                 break;
             }
-            inputDirection = DIRECTION_DOWN;
+            inputDirection = directionDown;
             break;
 
-        case ARROW_LEFT:
+        case arrowLeft:
             if(lastInputDirection.x !== 0)
             {
                 break;
             }
-            inputDirection = DIRECTION_LEFT;
+            inputDirection = directionLeft;
             break;
 
-        case ARROW_RIGHT:
+        case arrowRight:
             if(lastInputDirection.x !== 0)
             {
                 break;
             }
-            inputDirection = DIRECTION_RIGHT;
+            inputDirection = directionRight;
             break;
     }
 });
 
 function play(currentTime) {
     if (gameOver) {
-       if (confirm(GAME_OVER_MESSAGE)) {
+       if (confirm(gameOverMessage)) {
             isNewBestScore = score > bestScore;
             if (isNewBestScore || bestScore == null) {
                 bestScore = score;
@@ -124,19 +124,19 @@ function play(currentTime) {
     }
 
     window.requestAnimationFrame(play);
-    let secondsSinceLastRender = (currentTime - lastRenderTime) / SECONDS_IN_MILLISECOND;
+    const secondsSinceLastRender = (currentTime - lastRenderTime) / secondsInMillisecond;
 
-    if (secondsSinceLastRender < 1 / SNAKE_SPEED) return;
+    if (secondsSinceLastRender < 1 / snakeSpeed) return;
     
     lastRenderTime = currentTime;
 
     update();
-    draw(GAME_BOARD);
+    draw(gameBoard);
 }
 
 function loadGame(bestScore) {
-    let bestScoreText = document.getElementById(BEST_SCORE_ID);
-    bestScoreText.innerHTML = BEST_SCORE_LABEL + bestScore;
+    const bestScoreText = document.getElementById(bestScoreId);
+    bestScoreText.innerHTML = bestScoreLabel + bestScore;
 
     resetVariableValues();
 
@@ -183,19 +183,19 @@ function updateSnake() {
         snakeBody[index + 1] = {...snakeBody[index]};
     }
 
-    let head = getSnakeHead();
+    const head = getSnakeHead();
     head.x += inputDirection.x;
     head.y += inputDirection.y;
 
     lastInputDirection = inputDirection;
 
-    let isOutOfLeftBound = head.x < 1;
-    let isOutOfRightBound = head.x > GRID_SIZE;
-    let isOutOfUpBound = head.y < 1
-    let isOutOfBoundsDown = head.y > GRID_SIZE;
+    const isOutOfLeftBound = head.x < 1;
+    const isOutOfRightBound = head.x > gridSize;
+    const isOutOfUpBound = head.y < 1
+    const isOutOfBoundsDown = head.y > gridSize;
 
     if (isOutOfLeftBound) {
-        head.x = GRID_SIZE;
+        head.x = gridSize;
         return;
     }
 
@@ -205,7 +205,7 @@ function updateSnake() {
     }
 
     if (isOutOfUpBound) {
-        head.y = GRID_SIZE;
+        head.y = gridSize;
         return;
     }
     
@@ -222,12 +222,12 @@ function drawSnake(gameboard) {
         snakeElement.style.gridColumnStart = snakeBody[index].x;
         snakeElement.style.gridRowStart = snakeBody[index].y;
 
-        let isHead = index == 0;
+        const isHead = index == 0;
         if (isHead) {
-            snakeElement.id = SNAKE_HEAD_ID;
+            snakeElement.id = snakeHeadId;
         }
         else {
-            snakeElement.className = SNAKE_BODY_CLASS;
+            snakeElement.className = snakeBodyClass;
         }
 
         gameboard.appendChild(snakeElement);
@@ -242,7 +242,7 @@ function expandSnake(amount) {
 
 function isOnSnake(position, { ignoreHead = false } = {}) {
     return snakeBody.some((segment, index) => {
-        let isHead = index == 0;
+        const isHead = index == 0;
         if (isHead && ignoreHead) {
             return false;
         }
@@ -259,7 +259,7 @@ function addSnakeSegments() {
 }
 
 function getSnakeHead() {
-    let head = snakeBody[0];
+    const head = snakeBody[0];
 
     return head;
 }
@@ -269,15 +269,15 @@ function adjustSnakeHeadOrientation(newCoordinates) {
     let degreesToRotate = 0;
 
     switch (newDirection) {
-        case DIRECTION_LEFT_NAME:
+        case directionLeftName:
             degreesToRotate = -90;
             break;
 
-        case DIRECTION_RIGHT_NAME:
+        case directionRightName:
             degreesToRotate = 90;
             break;
 
-        case DIRECTION_DOWN_NAME:
+        case directionDownName:
             degreesToRotate = 180;
             break;
 
@@ -285,36 +285,36 @@ function adjustSnakeHeadOrientation(newCoordinates) {
             return;
     }
 
-    let snakeHeadElement = document.getElementById(SNAKE_HEAD_ID);
+    const snakeHeadElement = document.getElementById(snakeHeadId);
     snakeHeadElement.style.transform = 'rotate(' + degreesToRotate + 'deg)';
 }
 
 function isSnakeIsIntersectingItself() {
-    let head = getSnakeHead();
+    const head = getSnakeHead();
 
     return isOnSnake(head, { ignoreHead : true });
 }
 
 function updateFood() {
     if (isOnSnake(regularFood)) {
-        expandSnake(EXPANSION_RATE);
-        addPointsToScore(REGULAR_FOOD_POINTS);
+        expandSnake(expansionRate);
+        addPointsToScore(regularFoodPoints);
         regularFood = getRandomFoodPosition();
     }
 
     if (specialFood.isSpawned && isOnSnake(specialFood)) {
         specialFood.isSpawned = false;
-        expandSnake(EXPANSION_RATE);
-        addPointsToScore(SPECIAL_FOOD_POINTS);
+        expandSnake(expansionRate);
+        addPointsToScore(specialFoodPoints);
     }
 
-    let randomPercentage = getRandomIntBiggerThanZero(MAX_PERCENT_POSSIBILITY);
+    const randomPercentage = getRandomIntBiggerThanZero(maxPercentPossibility);
 
-    let currentTime = (new Date).getTime();
+    const currentTime = (new Date).getTime();
 
-    let isPossibleToGetSpawned = randomPercentage <= SPECIAL_FOOD_PERCENT_POSSIBILITY;
-    let isInTheSamePositionAsRegularFood = specialFood.x == regularFood.x && specialFood.y == regularFood.y;
-    let timeForSpecialFoodHasRunOut = currentTime - specialFoodCreationTime > SPECIAL_FOOD_EXPIRATION_MS;
+    const isPossibleToGetSpawned = randomPercentage <= specialFoodPercentPossibility;
+    const isInTheSamePositionAsRegularFood = specialFood.x == regularFood.x && specialFood.y == regularFood.y;
+    const timeForSpecialFoodHasRunOut = currentTime - specialFoodCreationTime > specialFoodExpirationMs;
     if (!specialFood.isSpawned && isPossibleToGetSpawned) {    
         do {
             specialFood = getRandomFoodPosition();
@@ -330,23 +330,23 @@ function updateFood() {
 }
 
 function drawFood(gameboard) {
-    foodElement = document.createElement('div');
-    foodElement.style.gridColumnStart = regularFood.x;
-    foodElement.style.gridRowStart = regularFood.y;
-    foodElement.classList.add(REGULAR_FOOD_CLASS);
-    gameboard.appendChild(foodElement);
+    regularFoodElement = document.createElement('div');
+    regularFoodElement.style.gridColumnStart = regularFood.x;
+    regularFoodElement.style.gridRowStart = regularFood.y;
+    regularFoodElement.classList.add(regularFoodClass);
+    gameboard.appendChild(regularFoodElement);
 
     if (specialFood.isSpawned) {
         specialFoodElement = document.createElement('div');
         specialFoodElement.style.gridColumnStart = specialFood.x;
         specialFoodElement.style.gridRowStart = specialFood.y;
-        specialFoodElement.classList.add(SPECIAL_FOOD_CLASS);
+        specialFoodElement.classList.add(specialFoodClass);
         gameboard.appendChild(specialFoodElement);
         if (specialFoodCreationTime == null) {
             specialFoodCreationTime = (new Date).getTime();
         }
     }
-    else if (gameboard.classList.contains(SPECIAL_FOOD_CLASS)) {
+    else if (gameboard.classList.contains(specialFoodClass)) {
         gameboard.removeChild(specialFoodElement);
     }
 }
@@ -361,22 +361,22 @@ function getRandomFoodPosition() {
 }
 
 function haveEqualPositions(firstPosition, secondPosition) {
-    let haveEqualPositions = firstPosition.x == secondPosition.x && firstPosition.y == secondPosition.y;
+    const haveEqualPositions = firstPosition.x == secondPosition.x && firstPosition.y == secondPosition.y;
 
     return haveEqualPositions;
 }
 
 function getRandomGridPosition() {
-    let position = {
-        x: getRandomIntBiggerThanZero(GRID_SIZE),
-        y: getRandomIntBiggerThanZero(GRID_SIZE)
+    const position = {
+        x: getRandomIntBiggerThanZero(gridSize),
+        y: getRandomIntBiggerThanZero(gridSize)
     }
 
     return position;
 }
 
 function getRandomIntBiggerThanZero(upperBound) {
-    let randomInt =  Math.floor(Math.random() * upperBound) + 1;
+    const randomInt =  Math.floor(Math.random() * upperBound) + 1;
 
     return randomInt;
 }
@@ -387,8 +387,8 @@ function addPointsToScore(points) {
 }
 
 function refreshScore() {
-    let scoreText = document.getElementById(SCORE_ID);
-    scoreText.innerHTML = SCORE_LABEL + score;
+    const scoreText = document.getElementById(scoreId);
+    scoreText.innerHTML = scoreLabel + score;
 }
 
 function getDirectionName(directionCoordinates) {
@@ -396,21 +396,21 @@ function getDirectionName(directionCoordinates) {
 
     switch (directionCoordinates.x) {
         case 1:
-            directionName = DIRECTION_RIGHT_NAME;
+            directionName = directionRightName;
             break;
     
         case -1:
-            directionName = DIRECTION_LEFT_NAME;
+            directionName = directionLeftName;
             break;
     }
 
     switch (directionCoordinates.y) {
         case -1:
-            directionName = DIRECTION_UP_NAME;
+            directionName = directionUpName;
             break;
     
         case 1:
-            directionName = DIRECTION_DOWN_NAME;
+            directionName = directionDownName;
     }
 
     return directionName;
