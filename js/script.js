@@ -10,10 +10,10 @@ const directionUpName = 'up';
 const directionDownName = 'down';
 const directionLeftName = 'left';
 const directionRightName = 'right';
-const directionUp = {x: 0, y: -1};
-const directionDown = {x: 0, y: 1};
-const directionLeft = {x: -1, y: 0};
-const directionRight = {x: 1, y: 0};
+const directionUpY = -1;
+const directionDownY = 1;
+const directionLeftX = -1;
+const directionRightX = 1;
 
 //  Score labels
 const scoreLabel = "Score: ";
@@ -81,7 +81,8 @@ window.addEventListener('keydown', e => {
             {
                 break;
             }
-            inputDirection = directionUp;
+
+            inputDirection = {x: 0, y: directionUpY};
             break;
 
         case arrowDown:
@@ -89,7 +90,8 @@ window.addEventListener('keydown', e => {
             {
                 break;
             }
-            inputDirection = directionDown;
+
+            inputDirection = {x: 0, y: directionDownY};
             break;
 
         case arrowLeft:
@@ -97,7 +99,8 @@ window.addEventListener('keydown', e => {
             {
                 break;
             }
-            inputDirection = directionLeft;
+
+            inputDirection = {x: directionLeftX, y: 0};
             break;
 
         case arrowRight:
@@ -105,7 +108,8 @@ window.addEventListener('keydown', e => {
             {
                 break;
             }
-            inputDirection = directionRight;
+
+            inputDirection = {x: directionRightX, y: 0};
             break;
     }
 });
@@ -395,21 +399,21 @@ function getDirectionName(directionCoordinates) {
     let directionName;
 
     switch (directionCoordinates.x) {
-        case 1:
+        case directionRightX:
             directionName = directionRightName;
             break;
     
-        case -1:
+        case directionLeftX:
             directionName = directionLeftName;
             break;
     }
 
     switch (directionCoordinates.y) {
-        case -1:
+        case directionUpY:
             directionName = directionUpName;
             break;
     
-        case 1:
+        case directionDownY:
             directionName = directionDownName;
     }
 
