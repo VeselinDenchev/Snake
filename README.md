@@ -11,5 +11,5 @@ JavaScript  Course Project
     - Regular (an apple)\
     &nbsp;&nbsp;&nbsp;&nbsp;The regular food adds 1 point to the score. It spawns once after another piece of regular food is eaten. 
     - Special (a mouse)\
-    &nbsp;&nbsp;&nbsp;&nbsp;The special food adds 28 points to the score. It spawns randomly with 3% chance of spawning in each render of a game frame. It can't be in the same position as regular food that is already spawned. Once it is spawned it stays on the screen for 10 seconds and afterwards disapears.
+    &nbsp;&nbsp;&nbsp;&nbsp;The special food adds 28 points to the score. It spawns randomly with 3% chance of spawning in each render of a game frame. It can't be in the same position as regular food that is already spawned. Once it is spawned it stays on the screen for 10 seconds and afterwards disappears.
 5. The game ends when the head of the snake 'bites' the body (the heads touches a body segment). If the current score is bigger than the best score it becomes the new best score.
